@@ -38,6 +38,29 @@ class Product(BaseModel):
     section_id = db.Column(db.Integer(), db.ForeignKey("section.id"))
 
     # Relationship
-    products = db.relationship('Product', backpopulates = 'section')
+    section = db.relationship('Section', back_populates='products')
+    sale_items = db.relationship("SaleItem", back_populates='product')
+
+class SaleItem(BaseModel):
+    quantity = db.Column(db.Numeric(10, 2))
+    price_at_sale = db.Column(db.Numeric(10,2), nullable=False)
+
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
+    sale_id = db.Column(db.Integer(), db.ForeignKey('sale.id'))
+
+    # relationship
+    sale = db.relationship('Sale', back_populates = "sale_items")
+    product = db.relationship("Product", back_populates = "sale_items")
+
+
+class Sale(BaseModel):
+    total_amount = db.Column(db.Numeric(10,2))
+
+    customer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sale_items = db.relationship('SaleItem', back_populates="sale")
+
+    
+
+
 
 
