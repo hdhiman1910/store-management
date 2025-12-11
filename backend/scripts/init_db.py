@@ -6,7 +6,7 @@ from flask_security.utils import hash_password
 # run this from "backend" folder using command: python -m scripts.init_db
 
 with app.app_context():
-    db.drop_all() 
+    # db.drop_all()
     db.create_all()
     datastore : SQLAlchemyUserDatastore = app.datastore
 

@@ -2,6 +2,7 @@ from flask import Flask
 from config import LocalDevelopmentConfig
 from dotenv import load_dotenv
 from extensions import security
+from resources import auth_bp
 
 def create_app():
 
@@ -16,9 +17,12 @@ def create_app():
     # flask security stuff
     from flask_security.datastore import SQLAlchemyUserDatastore
     datastore = SQLAlchemyUserDatastore(db, User, Role )
-    security.init_app(app, datastore = datastore, ) #register_blueprint=False
+    security.init_app(app, datastore = datastore) #register_blueprint=False
 
     app.datastore = datastore
+
+    # blueprint registration
+    app.register_blueprint(auth_bp)
 
     # for trial
     with app.app_context():
