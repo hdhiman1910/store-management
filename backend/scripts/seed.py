@@ -127,7 +127,8 @@ def seed_database():
             sale_date = now - timedelta(days=random.randint(0, 30), hours=random.randint(0,23), minutes=random.randint(0,59))
             sale = Sale(
                 created_at=sale_date,
-                total_amount=0.0
+                total_amount=0.0,
+                customer_id=(random.choice(customer).id if customer else None)
             )
             db.session.add(sale)
             db.session.flush()
