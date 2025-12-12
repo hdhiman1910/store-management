@@ -16,7 +16,7 @@ class User(BaseModel, UserMixin):
     # flask-security specific:
     fs_uniquifier = db.Column(db.String, unique = True, nullable = False)
     active = db.Column(db.Boolean, default = True) # if Active = False, then the user will not be able to login
-    roles = db.Relationship('Role', backref = 'bearers', secondary='user_roles')
+    roles = db.relationship('Role', backref = 'bearers', secondary='user_roles')
 
     requests = db.relationship('Request', back_populates = 'user')
 
@@ -28,7 +28,7 @@ class UserRoles(BaseModel):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
-class Manger(BaseModel):
+class Manager(BaseModel):
     salary = db.Column(db.Integer)
     address = db.Column(db.String)
     department = db.Column(db.String)
@@ -62,7 +62,8 @@ class Product(BaseModel):
     stock = db.Column(db.Numeric(10,2))
     expiry = db.Column(db.DateTime(timezone = True))
     mfd = db.Column(db.DateTime(timezone = True))
-    unit_of_sale = db.Column(db.Enum('kg', 'litre', 'unit'))
+    unit_of_measure = db.Column(db.Enum('kg', 'litre', 'piece', 'pack'))
+    description = db.Column(db.String)
 
     section_id = db.Column(db.Integer(), db.ForeignKey("section.id"))
 
