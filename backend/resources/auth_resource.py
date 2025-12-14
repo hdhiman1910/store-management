@@ -1,12 +1,9 @@
-"/login"
-"/register"
-
 from flask import Blueprint, request, jsonify
 from flask_security import verify_password, hash_password
 from models import User, db
 from flask import current_app
 
-auth_bp = Blueprint("auth", __name__,  url_prefix="/auth")
+auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 @auth_bp.route("/login", methods=['POST'])
 def login():

@@ -2,7 +2,7 @@ from flask import Flask
 from config import LocalDevelopmentConfig
 from dotenv import load_dotenv
 from extensions import security
-from resources import auth_bp
+from resources import auth_bp, api, api_bp
 
 def create_app():
 
@@ -23,6 +23,8 @@ def create_app():
 
     # blueprint registration
     app.register_blueprint(auth_bp)
+    # register REST API blueprint
+    app.register_blueprint(api_bp)
 
     # for trial
     with app.app_context():
