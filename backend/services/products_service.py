@@ -26,6 +26,7 @@ class ProductService():
         
         db.session.delete(item)
         db.session.commit()
+        return item
 
     @staticmethod
     def update(data):
@@ -33,18 +34,16 @@ class ProductService():
         if (not item):
             raise ServiceError(f"Product with id {data['id']} not found")
         
-        item.name = data["name"]
-        item.price = data["price"]
-        item.description = data["description"]
+        # need check if key is present in model
+        for key in data:
+            setattr(item, key, data[key])
+
         db.session.commit()
+        return item
 
     @staticmethod
     def create(data):
-        item = Product(
-            name = data["name"],
-            price = data["price"],
-            description = data["description"]
-        )
+        item = Product(**data)
         db.session.add(item)
         db.session.commit()
         return item
