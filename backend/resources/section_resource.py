@@ -1,21 +1,14 @@
 from flask import request, jsonify
 from flask_restful import Resource, marshal, marshal_with, fields, reqparse
-from services import ProductService as service
+from services import SectionService as service
 from .resource_utils import validate_date
-from .marshal_fields import product_fields as marshal_fields
+from .marshal_fields import section_fields as marshal_fields
 
 parser = reqparse.RequestParser()
-parser.add_argument('name', type=str, required=True, help='Name of the product is required')
-parser.add_argument('price', type=float, required=True, help='Price of the product is required')
-parser.add_argument('stock', type=float, required=True, help='Stock of the product is required')
-parser.add_argument('expiry', type=validate_date)
-parser.add_argument('mfd', type=validate_date)
-parser.add_argument('unit_of_measure', type=str, required=True, help='Unit of measure is required')
-parser.add_argument('description', type=str)
-parser.add_argument('section_id', type=int, required=True, help='Section ID is required check products_resource.py for more info')
+parser.add_argument('name', type=str, required=True, help='Name of the section is required')
 
-# api/products/<int:id>
-class ProductResource(Resource):
+# api/sections/<int:id>
+class SectionResource(Resource):
     @marshal_with(marshal_fields)
     def get(self, id):
         item = service.get_by_id(id)
@@ -59,8 +52,8 @@ class ProductResource(Resource):
         message = service.delete(id)
         return message, 200
 
-# api/products
-class ProductListResource(Resource):
+# api/sections
+class SectionListResource(Resource):
     @marshal_with(marshal_fields)
     def get(self):
         items = service.get_all()

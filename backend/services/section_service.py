@@ -1,7 +1,9 @@
-from models import Product, db
+from models import Section, db
 from .service_errors import ServiceError
 
-class ProductService():
+model = Section
+
+class SectionService():
 
     @staticmethod
     # staticmethod basically means this method belongs to the class and not to any specific instance of the class.
@@ -9,18 +11,18 @@ class ProductService():
     # for example, you can call ProductService.get_all() without needing to do something like:
     # service = ProductService()
     def get_all():
-        return Product.query.all()
+        return model.query.all()
     
     @staticmethod
     def get_by_id(id):
-        item = Product.query.get(id)
+        item = model.query.get(id)
         if (not item):
             raise ServiceError(f"Product with id {id} not found")
         return item
     
     @staticmethod
     def delete(id):
-        item = Product.query.get(id)
+        item = model.query.get(id)
         if (not item):
             raise ServiceError(f"Product with id {id} not found")
         
@@ -30,7 +32,7 @@ class ProductService():
 
     @staticmethod
     def update(data):
-        item = Product.query.get(data["id"])
+        item = model.query.get(data["id"])
         if (not item):
             raise ServiceError(f"Product with id {data['id']} not found")
         
@@ -43,7 +45,7 @@ class ProductService():
 
     @staticmethod
     def create(data):
-        item = Product(**data)
+        item = model(**data)
         db.session.add(item)
         db.session.commit()
         return item
