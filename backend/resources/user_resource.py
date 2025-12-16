@@ -75,3 +75,9 @@ class UserListResource(Resource):
     def get(self):
         items = service.get_all()
         return (items)
+    
+# api/users/approve/<int:id>
+@roles_required('admin')
+def approve_user(id):
+    user = service.update({"active": True, "id": id})
+    return marshal(user, marshal_fields), 200
