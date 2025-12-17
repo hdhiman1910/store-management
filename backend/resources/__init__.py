@@ -19,4 +19,4 @@ api.add_resource(SectionListResource, "/sections")
 api.add_resource(UserResource, "/users/<int:id>")
 api.add_resource(UserListResource, "/users")
 
-api_bp.add_url_rule("/users/approve/<int:id>", view_func=approve_user)
+api_bp.add_url_rule("/users/approve/<int:id>", view_func=approve_user, methods=["POST"])
